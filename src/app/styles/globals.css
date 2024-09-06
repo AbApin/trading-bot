@@ -129,3 +129,14 @@ p {
 .w-50 {
   width: 48%;
 }
+
+/* media */
+@media screen and (max-width: 991px) {
+  .homeInner {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .w-50 {
+    width: 100%;
+  }
+}
