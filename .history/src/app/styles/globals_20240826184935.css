@@ -1,0 +1,118 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Dropdown and Inputs */
+select,
+input[type='number'] {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+select:focus,
+input[type='number']:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 255, 0.2);
+}
+
+/* Buttons */
+button {
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Price Paragraph */
+p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Layout and Spacing */
+.select-container,
+.inputs-container,
+.buttons-container {
+  margin-bottom: 20px;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Error Message Styles */
+.error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+  border: 1px solid #d8000c;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.order-history {
+  margin-top: 20px;
+}
+
+.order-history h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.order-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.order-history li {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

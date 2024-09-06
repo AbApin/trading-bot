@@ -1,0 +1,38 @@
+.table-container {
+  width: 50%; /* 50% of screen width */
+  height: 100vh; /* Full height */
+  overflow-y: auto; /* Scrollable vertically */
+  position: relative;
+  margin-top: 20px; /* Space from other elements */
+}
+
+.crypto-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.crypto-table th,
+.crypto-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.crypto-table thead {
+  background-color: #f9f9f9;
+}
+
+.crypto-table tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.crypto-table tbody tr:last-child {
+  background-color: #e0ffe0; /* Highlight the latest row */
+}
+
+/* Ensure that the latest row is always visible */
+.table-container::after {
+  content: '';
+  display: block;
+  height: 50px; /* Space at the bottom of the table */
+}

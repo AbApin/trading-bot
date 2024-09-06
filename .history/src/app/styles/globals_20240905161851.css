@@ -1,0 +1,73 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Flexbox to align content */
+}
+
+/* Container for the main content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1; /* Take up the remaining space */
+}
+
+/* Table Container */
+.table-container {
+  width: 50%; /* 50% of screen width */
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Scrollable vertically */
+  position: fixed; /* Fixed position on the right side */
+  right: 0; /* Align to the right edge */
+  top: 0; /* Align to the top edge */
+  background-color: #fff; /* Background color for table container */
+  border-left: 1px solid #ccc; /* Border to separate from the rest of the page */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Table Styles */
+.crypto-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.crypto-table th,
+.crypto-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.crypto-table thead {
+  background-color: #f9f9f9;
+}
+
+.crypto-table tbody {
+  display: block; /* Block display to allow scrolling */
+  height: calc(100vh - 50px); /* Full height minus fixed header space */
+  overflow-y: auto; /* Scrollable vertically */
+}
+
+.crypto-table tbody tr {
+  display: table; /* Required for scrolling */
+  width: 100%; /* Full width */
+  table-layout: fixed; /* Fixed table layout */
+}
+
+.crypto-table tbody tr.current-time {
+  background-color: #e0ffe0; /* Highlight the current time row in green */
+  font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Sticky Header */
+.crypto-table thead th {
+  position: sticky; /* Stick header to the top */
+  top: 0; /* Align to the top */
+  background-color: #f9f9f9; /* Background color to make sure header is visible */
+  z-index: 1; /* Ensure header stays above other content */
+}
