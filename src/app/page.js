@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import './styles/globals.css'; // Adjust the path as necessary
+import './styles/globals.css';
+import './styles/home.css'; // Adjust the path as necessary
 import CryptoSelect from './components/CryptoSelect';
 import CryptoPrice from './components/CryptoPrice';
 import BalanceInfo from './components/BalanceInfo';
@@ -25,7 +25,7 @@ export default function Home() {
   const [selectedCrypto, setSelectedCrypto] = useState(FAVORITE_CRYPTOS[0]);
   const [currentPrice, setCurrentPrice] = useState(null);
   const [previousPrice, setPreviousPrice] = useState(null);
-  const [priceColor, setPriceColor] = useState('black');
+  const [priceColor, setPriceColor] = useState('#fef3e2');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [usdtBalance, setUsdtBalance] = useState(null);
@@ -35,8 +35,6 @@ export default function Home() {
   const [orderError, setOrderError] = useState(null);
   const [balanceError, setBalanceError] = useState(null);
   const [priceError, setPriceError] = useState(null);
-
-  const router = useRouter();
 
   // Fetch Prices and Balances
   useEffect(() => {
@@ -54,7 +52,7 @@ export default function Home() {
           } else if (newPrice < previousPrice) {
             setPriceColor('red');
           } else {
-            setPriceColor('black');
+            setPriceColor('#fef3e2');
           }
         }
 
@@ -143,7 +141,7 @@ export default function Home() {
     <div className="container">
       <div className="homeInner">
         <div className="w-50">
-          <h1>Crypto Trading Bot</h1>
+          <h1 className="title">Crypto Trading Bot</h1>
           <CryptoSelect
             selectedCrypto={selectedCrypto}
             setSelectedCrypto={setSelectedCrypto}
@@ -171,7 +169,6 @@ export default function Home() {
             handleStart={handleStart}
             handleStop={handleStop}
             intervalId={intervalId}
-            router={router}
             selectedCrypto={selectedCrypto}
           />
         </div>

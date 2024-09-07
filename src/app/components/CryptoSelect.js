@@ -4,7 +4,9 @@ import React from 'react';
 const CryptoSelect = ({ selectedCrypto, setSelectedCrypto, FAVORITE_CRYPTOS }) => {
   return (
     <div className="selectContainer">
-      <label htmlFor="crypto-select">Select Cryptocurrency:</label>
+      <label htmlFor="crypto-select" className="label">
+        Select Cryptocurrency:
+      </label>
       <select
         id="crypto-select"
         value={selectedCrypto}

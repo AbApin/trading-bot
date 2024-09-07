@@ -1,0 +1,80 @@
+.title,
+.label,
+.priceSub,
+.balanceSub {
+  color: #fef3e2;
+}
+
+/* Dropdown and Inputs */
+select {
+  border: 0;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #708871;
+  color: #fff;
+}
+select:focus,
+select::selection {
+  border: 0;
+  outline: 0;
+}
+select option {
+  background-color: #fef3e2;
+  color: #708871;
+}
+
+/* price */
+.priceSub {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.crypto-price {
+  color: #fef3e2;
+  font-size: 2rem;
+  font-weight: bold;
+  transition: color 0.5s ease; /* Smooth color transition */
+}
+
+/* balance */
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.priceInput {
+  display: block;
+  padding: 10px;
+  width: 90%;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: 0;
+  background: #708871;
+  color: #fff;
+  outline: 0;
+}
+.priceInput::placeholder {
+  color: #fff;
+}
+
+/* buttons */
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.actionButton {
+  display: inline-block;
+  padding: 10px 30px;
+  background: #606676;
+  transition: all 0.3s;
+}
+.actionButton:hover:not(:disabled) {
+  box-shadow: 0 0 10px #0a1a45;
+  background: #0a1a45;
+}

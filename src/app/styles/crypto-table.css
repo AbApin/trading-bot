@@ -6,12 +6,45 @@
 
 .crypto-table {
   width: 100%;
-  border-collapse: collapse;
+  border-radius: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 0;
+  overflow: hidden;
+  background: #36304a;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.table-container::-webkit-scrollbar {
+  display: none;
+  appearance: none;
+  width: 0; /* Completely hides the scrollbar */
+  height: 0;
+}
+
+/* Hide scrollbar for Firefox */
+.table-container {
+  scrollbar-width: none; /* Firefox-specific property */
+}
+
+/* Hide scrollbar for Firefox */
+.table-container {
+  scrollbar-width: none; /* Firefox-specific property */
+}
+
+/* Hide scrollbar for Internet Explorer, Edge */
+.table-container {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+table thead tr {
+  height: 60px;
+  background: #36304a;
+  color: #fff;
 }
 
 .crypto-table th,
 .crypto-table td {
-  border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
 }
@@ -20,12 +53,12 @@
   background-color: #f9f9f9;
 }
 
-.crypto-table tbody tr:nth-child(even) {
-  background-color: #f1f1f1;
+.crypto-table tbody tr {
+  background-color: #fef3e2;
 }
 
-.fixed-row {
-  background-color: #18a718; /* Highlight the latest row */
+.crypto-table .fixed-row {
+  background-color: #708871; /* Highlight the latest row */
   color: #fff;
 }
 
@@ -37,8 +70,4 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.back-button:hover {
-  background-color: #005bb5;
 }

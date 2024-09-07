@@ -19,15 +19,21 @@ const CryptoTablePage = ({ selectedCrypto }) => {
         );
         const volume24hUSDT = parseFloat(volumeResponse.data.quoteVolume);
         const volume24hCrypto = parseFloat(volumeResponse.data.volume);
-        const volumeRatio =
-          volume24hCrypto > 0 ? (volume24hUSDT / volume24hCrypto).toFixed(7) : '0';
+        const divideVolume = volume24hUSDT / volume24hCrypto;
 
+        let volumeRatio;
+
+        if (divideVolume > 1) {
+          volumeRatio = volume24hCrypto > 0 ? divideVolume.toFixed(2) : '0';
+        } else {
+          volumeRatio = volume24hCrypto > 0 ? divideVolume.toFixed(7) : '0';
+        }
         // Update data with the new entry
         setTableData((prevData) => [
           {
             dateTime: new Date().toLocaleString(),
             volumeRatio: volumeRatio,
-            currentPrice: newPrice.toFixed(7),
+            currentPrice: newPrice > 1 ? newPrice : newPrice.toFixed(7),
           },
           ...prevData.slice(0, 143), // Keep only the last 24 hours of data (assuming 1 entry per minute)
         ]);
