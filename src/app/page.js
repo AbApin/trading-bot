@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './styles/globals.css';
 import './styles/home.css'; // Adjust the path as necessary
@@ -25,7 +25,6 @@ export default function Home() {
   const [selectedCrypto, setSelectedCrypto] = useState(FAVORITE_CRYPTOS[0]);
   const [currentPrice, setCurrentPrice] = useState(null);
   const [previousPrice, setPreviousPrice] = useState(null);
-  const [priceColor, setPriceColor] = useState('#fef3e2');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [usdtBalance, setUsdtBalance] = useState(null);
@@ -36,6 +35,8 @@ export default function Home() {
   const [balanceError, setBalanceError] = useState(null);
   const [priceError, setPriceError] = useState(null);
 
+  const [showVolumeTable, setShowVolumeTable] = useState(false);
+
   // Fetch Prices and Balances
   useEffect(() => {
     const fetchPrice = async () => {
@@ -44,17 +45,6 @@ export default function Home() {
           `https://api.binance.com/api/v3/ticker/price?symbol=${selectedCrypto}`,
         );
         const newPrice = parseFloat(response.data.price);
-
-        // Update price color based on price change
-        if (previousPrice !== null) {
-          if (newPrice > previousPrice) {
-            setPriceColor('green');
-          } else if (newPrice < previousPrice) {
-            setPriceColor('red');
-          } else {
-            setPriceColor('#fef3e2');
-          }
-        }
 
         setPreviousPrice(currentPrice); // Update previous price
         setCurrentPrice(newPrice); // Set current price
@@ -88,20 +78,34 @@ export default function Home() {
     return () => clearInterval(id);
   }, [selectedCrypto, currentPrice, previousPrice]);
 
-  // Start Trading
+  // Inside your component
+  const currentPriceRef = useRef(currentPrice);
+  const minPriceRef = useRef(minPrice);
+  const maxPriceRef = useRef(maxPrice);
+  const usdtBalanceRef = useRef(usdtBalance);
+  const cryptoBalanceRef = useRef(cryptoBalance);
+
+  useEffect(() => {
+    currentPriceRef.current = currentPrice;
+    minPriceRef.current = minPrice;
+    maxPriceRef.current = maxPrice;
+    usdtBalanceRef.current = usdtBalance;
+    cryptoBalanceRef.current = cryptoBalance;
+  }, [currentPrice, minPrice, maxPrice, usdtBalance, cryptoBalance]);
+
   const handleStart = () => {
     if (intervalId) return;
 
     const id = setInterval(async () => {
+      console.log(currentPriceRef.current); // Use the ref to get the latest value
       try {
-        if (!currentPrice || !minPrice || !maxPrice) return;
+        const price = parseFloat(currentPriceRef.current);
+        const min = parseFloat(minPriceRef.current);
+        const max = parseFloat(maxPriceRef.current);
 
-        const price = parseFloat(currentPrice);
-        const min = parseFloat(minPrice);
-        const max = parseFloat(maxPrice);
-
-        if (price <= min && usdtBalance && usdtBalance > 1) {
-          const quantity = (usdtBalance / price).toFixed(6);
+        // Buy order logic
+        if (price <= min && usdtBalanceRef.current && usdtBalanceRef.current > 1) {
+          const quantity = (usdtBalanceRef.current / price).toFixed(6);
           await axios.post('/api/order', {
             symbol: selectedCrypto,
             side: 'BUY',
@@ -110,21 +114,21 @@ export default function Home() {
           setOrderError(null); // Clear previous errors if successful
         }
 
-        if (price >= max && cryptoBalance && cryptoBalance > 0.0001) {
-          const quantity = cryptoBalance.toFixed(6);
+        // Sell order logic
+        if (price >= max && cryptoBalanceRef.current && cryptoBalanceRef.current > 0.0001) {
+          const quantity = cryptoBalanceRef.current.toFixed(6);
           await axios.post('/api/order', {
             symbol: selectedCrypto,
             side: 'SELL',
             quantity,
           });
-
           setOrderError(null); // Clear previous errors if successful
         }
       } catch (error) {
         console.error('Order error:', error);
         setOrderError('Failed to execute trade order.');
       }
-    }, 10000); // Attempt trade every 10 seconds
+    }, 1000); // Attempt trade every 1 second
 
     setIntervalId(id);
   };
@@ -147,20 +151,16 @@ export default function Home() {
             setSelectedCrypto={setSelectedCrypto}
             FAVORITE_CRYPTOS={FAVORITE_CRYPTOS}
           />
-          <CryptoPrice
-            currentPrice={currentPrice}
-            priceColor={priceColor}
-            priceError={priceError}
-          />
+          <CryptoPrice currentPrice={currentPriceRef.current} priceError={priceError} />
           <BalanceInfo
-            usdtBalance={usdtBalance}
-            cryptoBalance={cryptoBalance}
+            usdtBalance={usdtBalanceRef.current}
+            cryptoBalance={cryptoBalanceRef.current}
             selectedCrypto={selectedCrypto}
             balanceError={balanceError}
           />
           <PriceInput
-            minPrice={minPrice}
-            maxPrice={maxPrice}
+            minPrice={minPrice.current}
+            maxPrice={maxPrice.current}
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
           />
@@ -172,8 +172,11 @@ export default function Home() {
             selectedCrypto={selectedCrypto}
           />
         </div>
-        <div className="w-50">
-          <CryptoTable selectedCrypto={selectedCrypto} />
+        <div className="w-50 cryptoTableContainer">
+          <button onClick={() => setShowVolumeTable(!showVolumeTable)} className="showVolumeTable">
+            {showVolumeTable ? 'Hide' : 'Show'} Volume Table
+          </button>
+          {showVolumeTable && <CryptoTable selectedCrypto={selectedCrypto} />}
         </div>
       </div>
     </div>
